@@ -126,14 +126,16 @@ def sparse_continents
     name, continent, population
   FROM
     countries
-  WHERE continent NOT INs
+  WHERE continent IN
     (
       SELECT
         continent
       FROM
         countries
-      WHERE
-       population < 25000000
+      GROUP BY
+       continent
+       HAVING
+        MAX(population) < 25000000
     );
   SQL
 end
